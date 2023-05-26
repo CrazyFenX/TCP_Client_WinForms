@@ -34,14 +34,15 @@
             this.ConnectButton = new System.Windows.Forms.Button();
             this.textBoxMessage = new System.Windows.Forms.TextBox();
             this.SendButton = new System.Windows.Forms.Button();
-            this.panel = new System.Windows.Forms.Panel();
             this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.startStreamButton = new System.Windows.Forms.Button();
+            this.DisconnectButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // textBoxIp
             // 
-            this.textBoxIp.Location = new System.Drawing.Point(12, 12);
+            this.textBoxIp.Location = new System.Drawing.Point(14, 12);
             this.textBoxIp.Name = "textBoxIp";
             this.textBoxIp.Size = new System.Drawing.Size(100, 23);
             this.textBoxIp.TabIndex = 0;
@@ -49,7 +50,7 @@
             // 
             // textBoxPort
             // 
-            this.textBoxPort.Location = new System.Drawing.Point(118, 12);
+            this.textBoxPort.Location = new System.Drawing.Point(14, 41);
             this.textBoxPort.Name = "textBoxPort";
             this.textBoxPort.Size = new System.Drawing.Size(100, 23);
             this.textBoxPort.TabIndex = 1;
@@ -57,21 +58,21 @@
             // 
             // textBoxState
             // 
-            this.textBoxState.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxState.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxState.Location = new System.Drawing.Point(225, 13);
+            this.textBoxState.Location = new System.Drawing.Point(120, 627);
             this.textBoxState.Multiline = true;
             this.textBoxState.Name = "textBoxState";
             this.textBoxState.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxState.Size = new System.Drawing.Size(859, 51);
+            this.textBoxState.Size = new System.Drawing.Size(1368, 51);
             this.textBoxState.TabIndex = 2;
             this.textBoxState.Text = "State";
             // 
             // ConnectButton
             // 
-            this.ConnectButton.Location = new System.Drawing.Point(64, 41);
+            this.ConnectButton.Location = new System.Drawing.Point(12, 70);
             this.ConnectButton.Name = "ConnectButton";
-            this.ConnectButton.Size = new System.Drawing.Size(102, 23);
+            this.ConnectButton.Size = new System.Drawing.Size(100, 23);
             this.ConnectButton.TabIndex = 3;
             this.ConnectButton.Text = "Connect";
             this.ConnectButton.UseVisualStyleBackColor = true;
@@ -80,31 +81,21 @@
             // textBoxMessage
             // 
             this.textBoxMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBoxMessage.Location = new System.Drawing.Point(12, 541);
+            this.textBoxMessage.Location = new System.Drawing.Point(12, 627);
             this.textBoxMessage.Name = "textBoxMessage";
-            this.textBoxMessage.Size = new System.Drawing.Size(100, 23);
+            this.textBoxMessage.Size = new System.Drawing.Size(102, 23);
             this.textBoxMessage.TabIndex = 5;
             this.textBoxMessage.Text = "Text";
             // 
             // SendButton
             // 
             this.SendButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.SendButton.Location = new System.Drawing.Point(118, 541);
+            this.SendButton.Location = new System.Drawing.Point(12, 656);
             this.SendButton.Name = "SendButton";
             this.SendButton.Size = new System.Drawing.Size(102, 23);
             this.SendButton.TabIndex = 6;
             this.SendButton.Text = "Send";
             this.SendButton.UseVisualStyleBackColor = true;
-            // 
-            // panel
-            // 
-            this.panel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.panel.Location = new System.Drawing.Point(906, 70);
-            this.panel.Name = "panel";
-            this.panel.Size = new System.Drawing.Size(178, 465);
-            this.panel.TabIndex = 7;
             // 
             // pictureBox
             // 
@@ -112,19 +103,41 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.pictureBox.Location = new System.Drawing.Point(12, 70);
+            this.pictureBox.Location = new System.Drawing.Point(120, 0);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(890, 465);
+            this.pictureBox.Size = new System.Drawing.Size(1368, 621);
             this.pictureBox.TabIndex = 8;
             this.pictureBox.TabStop = false;
+            // 
+            // startStreamButton
+            // 
+            this.startStreamButton.Location = new System.Drawing.Point(12, 99);
+            this.startStreamButton.Name = "startStreamButton";
+            this.startStreamButton.Size = new System.Drawing.Size(100, 23);
+            this.startStreamButton.TabIndex = 9;
+            this.startStreamButton.Text = "Start stream";
+            this.startStreamButton.UseVisualStyleBackColor = true;
+            this.startStreamButton.Click += new System.EventHandler(this.startStreamButton_Click);
+            // 
+            // DisconnectButton
+            // 
+            this.DisconnectButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.DisconnectButton.Location = new System.Drawing.Point(12, 598);
+            this.DisconnectButton.Name = "DisconnectButton";
+            this.DisconnectButton.Size = new System.Drawing.Size(102, 23);
+            this.DisconnectButton.TabIndex = 10;
+            this.DisconnectButton.Text = "Disconnect";
+            this.DisconnectButton.UseVisualStyleBackColor = true;
+            this.DisconnectButton.Click += new System.EventHandler(this.DisconnectButton_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1114, 569);
+            this.ClientSize = new System.Drawing.Size(1490, 684);
+            this.Controls.Add(this.DisconnectButton);
+            this.Controls.Add(this.startStreamButton);
             this.Controls.Add(this.pictureBox);
-            this.Controls.Add(this.panel);
             this.Controls.Add(this.SendButton);
             this.Controls.Add(this.textBoxMessage);
             this.Controls.Add(this.ConnectButton);
@@ -147,7 +160,8 @@
         private Button ConnectButton;
         private TextBox textBoxMessage;
         private Button SendButton;
-        private Panel panel;
         private PictureBox pictureBox;
+        private Button startStreamButton;
+        private Button DisconnectButton;
     }
 }

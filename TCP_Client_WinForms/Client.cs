@@ -19,15 +19,23 @@ namespace TCP_Client_Server
         string resultString = "";
         int errorCode = 0;
         TextBox textBoxState;
-        Panel panel;
         PictureBox pictureBox;
 
-        public Client(string _hostname, int _port, TextBox _textBoxState, Panel _panel, PictureBox _pictureBox)
+        int countErorr;
+
+        /// <summary>
+        /// Основной конструктор клиента
+        /// </summary>
+        /// <param name="_hostname"> ip сервера </param>
+        /// <param name="_port"> порт сервера </param>
+        /// <param name="_textBoxState"> текстбокс для вывода логов </param>
+        /// <param name="_pictureBox"> полотно для отрисовки переданных изображений </param>
+        public Client(string _hostname, int _port, TextBox _textBoxState, PictureBox _pictureBox)
         {
             textBoxState = _textBoxState;
-            panel = _panel;
             pictureBox = _pictureBox;
 
+            // Устанавливаем соединение с сервером
             Socket tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             try
             {
@@ -35,6 +43,9 @@ namespace TCP_Client_Server
                 connected = true;
                 errorCode = 0;
                 resultString = $"Подключено к {_hostname}:{_port}";
+
+                //// Ожидание сообщения
+                //ReceiveAsyncTCP(serverSocket);
             }
             catch (SocketException)
             {
@@ -42,14 +53,11 @@ namespace TCP_Client_Server
                 errorCode = 1;
                 resultString = $"Не удалось установить подключение к {_hostname}. ErrorCode: {errorCode}";
             }
-
             WriteInLog(resultString);
-
-            ReceiveAsyncTCP(serverSocket);
         }
 
         /// <summary>
-        /// Отправить сообщение
+        /// Отправить сообщение (Устаревшее)
         /// </summary>
         public async void SendAsyncTCP()
         {
@@ -59,33 +67,28 @@ namespace TCP_Client_Server
                 return;
             }
 
-            // определяем данные для отправки - текущее время
+            // Определяем данные для отправки - текущее время
             byte[] data = Encoding.UTF8.GetBytes(DateTime.Now.ToLongTimeString());
 
-            // отправляем данные
+            // Отправляем данные
             await serverSocket.SendAsync(data, SocketFlags.None);
 
             WriteInLog("Сообщение отправлено");
         }
 
         /// <summary>
-        /// Принять сообщение
+        /// Принять сообщение (В разработке)
         /// </summary>
-        /// <param name="socket"></param>
+        /// <param name="socket"> Сокет конекта </param>
         private async void ReceiveAsyncTCP(Socket socket)
         {
             byte[] data = new byte[100000000];
 
             // получаем данные из потока
             int bytes = await socket.ReceiveAsync(data, SocketFlags.None);
-            // получаем отправленное время
-            //string time = Encoding.UTF8.GetString(data, 0, bytes);
             var recievedImage = FromByteToImage(data);
             var recievedImage1 = ByteToImage(data);
 
-            //panel.BackgroundImage = recievedImage1;
-            //panel.BackgroundImage = recievedImage;
-            //panel.Refresh();
             pictureBox.Image = recievedImage1;
             pictureBox.Update();
             pictureBox.Refresh();
@@ -104,26 +107,77 @@ namespace TCP_Client_Server
 
         }
 
-        private void ServerDisconnectAsync(Socket socket)
+        public void ServerDisconnect()
         {
-            socket.DisconnectAsync(new SocketAsyncEventArgs(true)); // отключаемся
+            serverSocket?.DisconnectAsync(new SocketAsyncEventArgs(true)); // отключаемся
         }
-
 
         ~Client()
         {
             if (connected)
             {
-                this.ServerDisconnectAsync(serverSocket);
+                this.ServerDisconnect();
                 connected = false;
             }
         }
 
+        #region Потоки удаленного стола
+
+        public async void StartRemoteStream()
+        {
+            if (serverSocket == null)
+            {
+                WriteInLog("Сервер не доступен!");
+                return;
+            }
+            while (connected)
+            {
+                try
+                {
+                    byte[] data = new byte[100000000];
+
+                    // получаем данные из потока
+                    int bytes = await serverSocket.ReceiveAsync(data, SocketFlags.None);
+                    var recievedImage1 = ByteToImage(data);
+
+                    pictureBox.Image = recievedImage1;
+                    pictureBox.Update();
+                    pictureBox.Refresh();
+
+                    WriteInLog($"Плучено сообщение!");
+                }
+                catch
+                {
+                    countErorr++;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Service Methods
+
+        /// <summary>
+        /// Запись в текстбокс лога изнутри 
+        /// </summary>
+        /// <param name="message"> Сообщение </param>
         private void WriteInLog(string message)
         {
             if (textBoxState != null)
                 textBoxState.Text += "\r\n" + message;
         }
+
+        /// <summary>
+        /// Запись в текстбокс лога извне
+        /// </summary>
+        /// <param name="message"> Сообщение </param>
+        /// <param name="_textBoxState"> Целевой текстбокс </param>
+        public static void WriteInLog(string message, TextBox _textBoxState)
+        {
+            if (_textBoxState != null)
+                _textBoxState.Text += "\r\n" + message;
+        }
+
         public static Bitmap ByteToImage(byte[] blob)
         {
             MemoryStream mStream = new MemoryStream();
@@ -134,6 +188,11 @@ namespace TCP_Client_Server
             return bm;
         }
 
+        /// <summary>
+        /// Конвертация массива битов в изображение
+        /// </summary>
+        /// <param name="imageIn"> Изображение </param>
+        /// <returns></returns>
         private Image FromByteToImage(byte[] byteArrayIn)
         {
             Image returnImage = null;
@@ -149,5 +208,8 @@ namespace TCP_Client_Server
             }
             return returnImage;
         }
+
+        #endregion Service Methods
+
     }
 }

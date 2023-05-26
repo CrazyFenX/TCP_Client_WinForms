@@ -15,9 +15,27 @@ namespace TCP_Client_WinForms
         {
             var ip = textBoxIp.Text;
             var port = Convert.ToInt32(textBoxPort.Text);
-            tcpClient = new Client(ip, port, textBoxState, panel, pictureBox);
-
+            tcpClient = new Client(ip, port, textBoxState, pictureBox);
         }
 
+        private void startStreamButton_Click(object sender, EventArgs e)
+        {
+            if (tcpClient == null)
+            {
+                Client.WriteInLog("Сервер не подключен!", textBoxState);
+                return;
+            }
+            tcpClient.StartRemoteStream();
+        }
+
+        private void DisconnectButton_Click(object sender, EventArgs e)
+        {
+            if (tcpClient == null)
+            {
+                Client.WriteInLog("Сервер не подключен!", textBoxState);
+                return;
+            }
+            tcpClient.ServerDisconnect();
+        }
     }
 }
