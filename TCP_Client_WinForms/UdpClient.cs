@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TCP_Client_WinForms
 {
-    internal class MyUdpClient
+    public class MyUdpClient
     {
         int port = 8888;
         string hostname = "192.168.0.14";
@@ -108,7 +108,7 @@ namespace TCP_Client_WinForms
 
         //public void ServerDisconnect()
         //{
-        //    udpServer?.DisconnectAsync(new SocketAsyncEventArgs(true)); // отключаемся
+        //    udpServer?.dis(new SocketAsyncEventArgs(true)); // отключаемся
         //}
 
         //~MyUdpClient()
@@ -247,7 +247,6 @@ namespace TCP_Client_WinForms
             }
             return returnImage;
         }
-
 
         #endregion Service Methods
 

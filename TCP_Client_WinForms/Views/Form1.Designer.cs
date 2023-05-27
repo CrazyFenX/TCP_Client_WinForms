@@ -39,6 +39,8 @@
             this.DisconnectButton = new System.Windows.Forms.Button();
             this.StartStreamUDP = new System.Windows.Forms.Button();
             this.buttonConnectUdp = new System.Windows.Forms.Button();
+            this.textBoxHeight = new System.Windows.Forms.TextBox();
+            this.textBoxWidth = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -72,7 +74,7 @@
             // 
             // ConnectButton
             // 
-            this.ConnectButton.Location = new System.Drawing.Point(3, 70);
+            this.ConnectButton.Location = new System.Drawing.Point(3, 150);
             this.ConnectButton.Name = "ConnectButton";
             this.ConnectButton.Size = new System.Drawing.Size(109, 23);
             this.ConnectButton.TabIndex = 3;
@@ -113,7 +115,7 @@
             // 
             // startStreamButton
             // 
-            this.startStreamButton.Location = new System.Drawing.Point(3, 99);
+            this.startStreamButton.Location = new System.Drawing.Point(3, 179);
             this.startStreamButton.Name = "startStreamButton";
             this.startStreamButton.Size = new System.Drawing.Size(109, 23);
             this.startStreamButton.TabIndex = 9;
@@ -134,7 +136,7 @@
             // 
             // StartStreamUDP
             // 
-            this.StartStreamUDP.Location = new System.Drawing.Point(3, 193);
+            this.StartStreamUDP.Location = new System.Drawing.Point(3, 273);
             this.StartStreamUDP.Name = "StartStreamUDP";
             this.StartStreamUDP.Size = new System.Drawing.Size(109, 23);
             this.StartStreamUDP.TabIndex = 12;
@@ -144,7 +146,7 @@
             // 
             // buttonConnectUdp
             // 
-            this.buttonConnectUdp.Location = new System.Drawing.Point(3, 164);
+            this.buttonConnectUdp.Location = new System.Drawing.Point(3, 244);
             this.buttonConnectUdp.Name = "buttonConnectUdp";
             this.buttonConnectUdp.Size = new System.Drawing.Size(109, 23);
             this.buttonConnectUdp.TabIndex = 11;
@@ -152,11 +154,29 @@
             this.buttonConnectUdp.UseVisualStyleBackColor = true;
             this.buttonConnectUdp.Click += new System.EventHandler(this.buttonConnectUdp_Click);
             // 
+            // textBoxHeight
+            // 
+            this.textBoxHeight.Location = new System.Drawing.Point(3, 109);
+            this.textBoxHeight.Name = "textBoxHeight";
+            this.textBoxHeight.Size = new System.Drawing.Size(111, 23);
+            this.textBoxHeight.TabIndex = 14;
+            this.textBoxHeight.Text = "1080";
+            // 
+            // textBoxWidth
+            // 
+            this.textBoxWidth.Location = new System.Drawing.Point(3, 80);
+            this.textBoxWidth.Name = "textBoxWidth";
+            this.textBoxWidth.Size = new System.Drawing.Size(111, 23);
+            this.textBoxWidth.TabIndex = 13;
+            this.textBoxWidth.Text = "1920";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1490, 684);
+            this.Controls.Add(this.textBoxHeight);
+            this.Controls.Add(this.textBoxWidth);
             this.Controls.Add(this.StartStreamUDP);
             this.Controls.Add(this.buttonConnectUdp);
             this.Controls.Add(this.DisconnectButton);
@@ -189,5 +209,7 @@
         private Button DisconnectButton;
         private Button StartStreamUDP;
         private Button buttonConnectUdp;
+        private TextBox textBoxHeight;
+        private TextBox textBoxWidth;
     }
 }

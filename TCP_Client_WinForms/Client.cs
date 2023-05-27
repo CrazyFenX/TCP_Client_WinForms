@@ -9,7 +9,7 @@ namespace TCP_Client_Server
 {
     public class Client
     {
-        int port = 8888;
+        int port = 5555;
         string hostname = "192.168.0.14";
 
         Socket serverSocket;
@@ -59,16 +59,13 @@ namespace TCP_Client_Server
         /// <summary>
         /// Отправить сообщение (Устаревшее)
         /// </summary>
-        public async void SendAsyncTCP()
+        public async void SendAsyncTCP(byte[] data)
         {
             if (serverSocket == null)
             {
                 WriteInLog("Клиент не доступен!");
                 return;
             }
-
-            // Определяем данные для отправки - текущее время
-            byte[] data = Encoding.UTF8.GetBytes(DateTime.Now.ToLongTimeString());
 
             // Отправляем данные
             await serverSocket.SendAsync(data, SocketFlags.None);

@@ -8,6 +8,9 @@ namespace TCP_Client_WinForms
         Client tcpClient;
         MyUdpClient udpClient;
 
+        int Height = 0;
+        int Width = 0;
+
         public Form1()
         {
             InitializeComponent();
@@ -42,18 +45,29 @@ namespace TCP_Client_WinForms
 
         private void buttonConnectUdp_Click(object sender, EventArgs e)
         {
-            var ip = textBoxIp.Text;
-            var port = Convert.ToInt32(textBoxPort.Text);
-            udpClient = new MyUdpClient(ip, port, textBoxState, pictureBox);
         }
 
         private void StartStreamUDP_Click(object sender, EventArgs e)
         {
+            var ip = textBoxIp.Text;
+            var port = Convert.ToInt32(textBoxPort.Text);
+
+            Height = Convert.ToInt32(textBoxHeight.Text);
+            Width = Convert.ToInt32(textBoxWidth.Text);
+
+            Remote RemoteForm = new Remote();
+            RemoteForm.Size = new Size(Width, Height);
+
+            RemoteForm.Show();
+
+            udpClient = new MyUdpClient(ip, port, textBoxState, RemoteForm.pictureBox);
+
             if (udpClient == null)
             {
                 Client.WriteInLog("Сервер не подключен!", textBoxState);
                 return;
             }
+
             udpClient.StartRemoteStream();
         }
     }
