@@ -73,6 +73,8 @@
             this.Controls.Add(this.pictureBox);
             this.Name = "Remote";
             this.Text = "Remote";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Remote_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Remote_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
 

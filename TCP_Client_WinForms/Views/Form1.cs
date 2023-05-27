@@ -11,6 +11,9 @@ namespace TCP_Client_WinForms
         int Height = 0;
         int Width = 0;
 
+        Thread threadTCP;
+        Thread threadUDP;
+
         public Form1()
         {
             InitializeComponent();
@@ -20,7 +23,8 @@ namespace TCP_Client_WinForms
         {
             var ip = textBoxIp.Text;
             var port = Convert.ToInt32(textBoxPort.Text);
-            tcpClient = new Client(ip, port, textBoxState, pictureBox);
+            tcpClient = new Client(ip, port, textBoxState, pictureBox/*, threadTCP, threadUDP*/);
+            threadTCP = new Thread(new ThreadStart(tcpClient.StartRemoteStream));
         }
 
         private void startStreamButton_Click(object sender, EventArgs e)
@@ -30,7 +34,8 @@ namespace TCP_Client_WinForms
                 Client.WriteInLog("Сервер не подключен!", textBoxState);
                 return;
             }
-            tcpClient.StartRemoteStream();
+            threadTCP.Start();
+            //tcpClient.StartRemoteStream();
         }
 
         private void DisconnectButton_Click(object sender, EventArgs e)
@@ -52,23 +57,34 @@ namespace TCP_Client_WinForms
             var ip = textBoxIp.Text;
             var port = Convert.ToInt32(textBoxPort.Text);
 
-            Height = Convert.ToInt32(textBoxHeight.Text);
-            Width = Convert.ToInt32(textBoxWidth.Text);
-
-            Remote RemoteForm = new Remote();
-            RemoteForm.Size = new Size(Width, Height);
-
-            RemoteForm.Show();
-
-            udpClient = new MyUdpClient(ip, port, textBoxState, RemoteForm.pictureBox);
-
-            if (udpClient == null)
+            try
             {
-                Client.WriteInLog("Сервер не подключен!", textBoxState);
-                return;
-            }
+                tcpClient = new Client(ip, port, textBoxState, pictureBox/*, threadTCP, threadUDP*/);
+                Client.WriteInLog("TCP Connected!", textBoxState);
 
-            udpClient.StartRemoteStream();
+                Height = Convert.ToInt32(textBoxHeight.Text);
+                Width = Convert.ToInt32(textBoxWidth.Text);
+
+                Remote RemoteForm = new Remote(tcpClient);
+                RemoteForm.Size = new Size(Width, Height);
+
+                RemoteForm.Show();
+
+                udpClient = new MyUdpClient(ip, port, textBoxState, RemoteForm.pictureBox);
+                Client.WriteInLog("UDP Connected!", textBoxState);
+
+                if (udpClient == null)
+                {
+                    Client.WriteInLog("Сервер не подключен!", textBoxState);
+                    return;
+                }
+
+                udpClient.StartRemoteStream();
+            }
+            catch (Exception ex)
+            {
+                Client.WriteInLog(ex.Message, textBoxState);
+            }
         }
     }
 }

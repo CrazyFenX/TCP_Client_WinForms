@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace TCP_Client_WinForms
 {
-    internal class Controller
-    {
-        // coords of click
-        float X = 0;
-        float Y = 0;
+    //internal class Controller
+    //{
+    //    // coords of click
+    //    float X = 0;
+    //    float Y = 0;
 
-        // keycode
-        short c = 0;
+    //    // keycode
+    //    short c = 0;
 
-    }
+    //}
 
     struct MouseData
     {
@@ -23,12 +23,21 @@ namespace TCP_Client_WinForms
         public ushort _y;
         public byte _button;
         public byte _ID;
+
         public MouseData(byte ID, ushort x, ushort y, byte button)
         {
             _ID = ID;
             _x = x;
             _y = y;
             _button = button;
+        }
+        
+        public MouseData(int ID, int x, int y, int button)
+        {
+            _ID = (byte)ID;
+            _x = (ushort)x;
+            _y = (ushort)y;
+            _button = (byte)button;
         }
 
         public static byte[] toByteArr(MouseData input)
@@ -70,11 +79,11 @@ namespace TCP_Client_WinForms
             _ID = ID;
         }
 
-        public byte[] toByteArr()
+        public static byte[] toByteArr(KeyBoardData kb)
         {
             byte[] mas = new byte[10];
-            mas[0] = _ID;
-            mas[1] = _button;
+            mas[0] = kb._ID;
+            mas[1] = kb._button;
             return mas;
         }
 
@@ -85,10 +94,4 @@ namespace TCP_Client_WinForms
             return new KeyBoardData(ID, button);
         }
     }
-
-    //enum ControlType
-    //{
-    //    mouse = 1,
-    //    keyboard = 2
-    //}
 }

@@ -97,10 +97,11 @@ namespace TCP_Client_WinForms
             //serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             //// пытаемся подключиться используя URL-адрес и порт
             //await serverSocket.ConnectAsync(_hostname, _port);
-
-            udpServer = new UdpClient(8888);
-            Console.WriteLine("UDP-сервер запущен...");
-
+            if (udpServer == null)
+            {
+                udpServer = new UdpClient(8888);
+                Console.WriteLine("UDP-сервер запущен...");
+            }
             //WriteInLog($"Адрес подключения {serverSocket.RemoteEndPoint}");
             //WriteInLog($"Адрес приложения {serverSocket.LocalEndPoint}");
 
