@@ -202,7 +202,7 @@ namespace TCP_Client_Server
                 ms.Write(byteArrayIn, 0, byteArrayIn.Length);
                 returnImage = Image.FromStream(ms, true); //Exception occurs here
             }
-            catch ( Exception ex)
+            catch (Exception ex)
             {
                 WriteInLog(ex.Message);
             }

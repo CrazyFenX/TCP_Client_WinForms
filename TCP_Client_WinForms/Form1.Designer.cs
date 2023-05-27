@@ -37,22 +37,24 @@
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.startStreamButton = new System.Windows.Forms.Button();
             this.DisconnectButton = new System.Windows.Forms.Button();
+            this.StartStreamUDP = new System.Windows.Forms.Button();
+            this.buttonConnectUdp = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // textBoxIp
             // 
-            this.textBoxIp.Location = new System.Drawing.Point(14, 12);
+            this.textBoxIp.Location = new System.Drawing.Point(3, 12);
             this.textBoxIp.Name = "textBoxIp";
-            this.textBoxIp.Size = new System.Drawing.Size(100, 23);
+            this.textBoxIp.Size = new System.Drawing.Size(111, 23);
             this.textBoxIp.TabIndex = 0;
             this.textBoxIp.Text = "100.124.160.151";
             // 
             // textBoxPort
             // 
-            this.textBoxPort.Location = new System.Drawing.Point(14, 41);
+            this.textBoxPort.Location = new System.Drawing.Point(3, 41);
             this.textBoxPort.Name = "textBoxPort";
-            this.textBoxPort.Size = new System.Drawing.Size(100, 23);
+            this.textBoxPort.Size = new System.Drawing.Size(111, 23);
             this.textBoxPort.TabIndex = 1;
             this.textBoxPort.Text = "8888";
             // 
@@ -70,9 +72,9 @@
             // 
             // ConnectButton
             // 
-            this.ConnectButton.Location = new System.Drawing.Point(12, 70);
+            this.ConnectButton.Location = new System.Drawing.Point(3, 70);
             this.ConnectButton.Name = "ConnectButton";
-            this.ConnectButton.Size = new System.Drawing.Size(100, 23);
+            this.ConnectButton.Size = new System.Drawing.Size(109, 23);
             this.ConnectButton.TabIndex = 3;
             this.ConnectButton.Text = "Connect";
             this.ConnectButton.UseVisualStyleBackColor = true;
@@ -111,9 +113,9 @@
             // 
             // startStreamButton
             // 
-            this.startStreamButton.Location = new System.Drawing.Point(12, 99);
+            this.startStreamButton.Location = new System.Drawing.Point(3, 99);
             this.startStreamButton.Name = "startStreamButton";
-            this.startStreamButton.Size = new System.Drawing.Size(100, 23);
+            this.startStreamButton.Size = new System.Drawing.Size(109, 23);
             this.startStreamButton.TabIndex = 9;
             this.startStreamButton.Text = "Start stream";
             this.startStreamButton.UseVisualStyleBackColor = true;
@@ -130,11 +132,33 @@
             this.DisconnectButton.UseVisualStyleBackColor = true;
             this.DisconnectButton.Click += new System.EventHandler(this.DisconnectButton_Click);
             // 
+            // StartStreamUDP
+            // 
+            this.StartStreamUDP.Location = new System.Drawing.Point(3, 193);
+            this.StartStreamUDP.Name = "StartStreamUDP";
+            this.StartStreamUDP.Size = new System.Drawing.Size(109, 23);
+            this.StartStreamUDP.TabIndex = 12;
+            this.StartStreamUDP.Text = "Start stream UDP";
+            this.StartStreamUDP.UseVisualStyleBackColor = true;
+            this.StartStreamUDP.Click += new System.EventHandler(this.StartStreamUDP_Click);
+            // 
+            // buttonConnectUdp
+            // 
+            this.buttonConnectUdp.Location = new System.Drawing.Point(3, 164);
+            this.buttonConnectUdp.Name = "buttonConnectUdp";
+            this.buttonConnectUdp.Size = new System.Drawing.Size(109, 23);
+            this.buttonConnectUdp.TabIndex = 11;
+            this.buttonConnectUdp.Text = "Connect UDP";
+            this.buttonConnectUdp.UseVisualStyleBackColor = true;
+            this.buttonConnectUdp.Click += new System.EventHandler(this.buttonConnectUdp_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1490, 684);
+            this.Controls.Add(this.StartStreamUDP);
+            this.Controls.Add(this.buttonConnectUdp);
             this.Controls.Add(this.DisconnectButton);
             this.Controls.Add(this.startStreamButton);
             this.Controls.Add(this.pictureBox);
@@ -163,5 +187,7 @@
         private PictureBox pictureBox;
         private Button startStreamButton;
         private Button DisconnectButton;
+        private Button StartStreamUDP;
+        private Button buttonConnectUdp;
     }
 }

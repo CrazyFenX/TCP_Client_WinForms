@@ -6,6 +6,8 @@ namespace TCP_Client_WinForms
     public partial class Form1 : Form
     {
         Client tcpClient;
+        MyUdpClient udpClient;
+
         public Form1()
         {
             InitializeComponent();
@@ -36,6 +38,23 @@ namespace TCP_Client_WinForms
                 return;
             }
             tcpClient.ServerDisconnect();
+        }
+
+        private void buttonConnectUdp_Click(object sender, EventArgs e)
+        {
+            var ip = textBoxIp.Text;
+            var port = Convert.ToInt32(textBoxPort.Text);
+            udpClient = new MyUdpClient(ip, port, textBoxState, pictureBox);
+        }
+
+        private void StartStreamUDP_Click(object sender, EventArgs e)
+        {
+            if (udpClient == null)
+            {
+                Client.WriteInLog("Сервер не подключен!", textBoxState);
+                return;
+            }
+            udpClient.StartRemoteStream();
         }
     }
 }
