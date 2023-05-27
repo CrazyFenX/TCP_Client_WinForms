@@ -23,6 +23,10 @@ namespace TCP_Client_Server
 
         int countErorr;
 
+        Thread tcpThread = null;
+        Thread udpThread = null;
+
+
         /// <summary>
         /// Основной конструктор клиента
         /// </summary>
@@ -30,10 +34,12 @@ namespace TCP_Client_Server
         /// <param name="_port"> порт сервера </param>
         /// <param name="_textBoxState"> текстбокс для вывода логов </param>
         /// <param name="_pictureBox"> полотно для отрисовки переданных изображений </param>
-        public Client(string _hostname, int _port, TextBox _textBoxState, PictureBox _pictureBox)
+        public Client(string _hostname, int _port, TextBox _textBoxState, PictureBox _pictureBox/*, Thread _tcpThread, Thread _udpThread*/)
         {
             textBoxState = _textBoxState;
             pictureBox = _pictureBox;
+            //tcpThread = _tcpThread;
+            //udpThread = _udpThread;
 
             // Устанавливаем соединение с сервером
             Socket tcpSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -43,6 +49,8 @@ namespace TCP_Client_Server
                 connected = true;
                 errorCode = 0;
                 resultString = $"Подключено к {_hostname}:{_port}";
+
+                // передача публичного ключа
 
                 //// Ожидание сообщения
                 //ReceiveAsyncTCP(serverSocket);
@@ -57,7 +65,7 @@ namespace TCP_Client_Server
         }
 
         /// <summary>
-        /// Отправить сообщение (Устаревшее)
+        /// Отправить сообщение
         /// </summary>
         public async void SendAsyncTCP(byte[] data)
         {
@@ -124,11 +132,15 @@ namespace TCP_Client_Server
         {
             if (serverSocket == null)
             {
-                WriteInLog("Сервер не доступен!");
+                //WriteInLog("Сервер не доступен!");
+                WriteInFile("Сервер не доступен!", "TCP");
                 return;
             }
+
             while (connected)
             {
+                //WriteInLog("TCP-поток");
+                WriteInFile("TCP-поток", "TCP");
                 try
                 {
                     byte[] data = new byte[100000000];
@@ -136,12 +148,12 @@ namespace TCP_Client_Server
                     // получаем данные из потока
                     int bytes = await serverSocket.ReceiveAsync(data, SocketFlags.None);
                     var recievedImage1 = ByteToImage(data);
-
+                    
                     pictureBox.Image = recievedImage1;
                     pictureBox.Update();
                     pictureBox.Refresh();
 
-                    WriteInLog($"Плучено сообщение!");
+                    WriteInFile("Плучено сообщение!", "TCP");
                 }
                 catch
                 {
@@ -173,6 +185,26 @@ namespace TCP_Client_Server
         {
             if (_textBoxState != null)
                 _textBoxState.Text += "\r\n" + message;
+        }
+        
+        /// <summary>
+        /// Запись в файл лога извне
+        /// </summary>
+        /// <param name="message"> Сообщение </param>
+        /// <param name="_textBoxState"> Целевой текстбокс </param>
+        public static void WriteInFile(string message, string threadName)
+        {
+            var date = DateTime.Now;
+            //using FileStream fileStream = new FileStream($"Logs\\{threadName}_Logs" + date.ToLongDateString(), FileMode.OpenOrCreate);
+            //fileStream.Write(message + " " + threadName + " " + date.ToLongTimeString(), 0, 0);
+            //using (FileStream file = File.OpenWrite($"Logs\\{threadName}_Logs" + date.ToLongDateString()))
+            using (FileStream fileStream = new FileStream($"{threadName}_Logs" + date.ToShortDateString(), FileMode.Open))
+            {
+                // преобразуем строку в байты
+                byte[] buffer = Encoding.Default.GetBytes(message);
+                // запись массива байтов в файл
+                fileStream.WriteAsync(buffer, 0, buffer.Length);
+            }
         }
 
         public static Bitmap ByteToImage(byte[] blob)
