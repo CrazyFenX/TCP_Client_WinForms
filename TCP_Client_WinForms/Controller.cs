@@ -23,26 +23,38 @@ namespace TCP_Client_WinForms
         public ushort _y;
         public byte _button;
         public byte _ID;
+        byte _UpOrDown;
 
-        public MouseData(byte ID, ushort x, ushort y, byte button)
+        public MouseData()
+        {
+            _ID = 0;
+            _x = 0;
+            _y = 0;
+            _button = 0;
+            _UpOrDown = 0;
+        }
+
+        public MouseData(byte ID, ushort x, ushort y, byte button, byte UpOrDown)
         {
             _ID = ID;
             _x = x;
             _y = y;
             _button = button;
+            _UpOrDown = UpOrDown;
         }
-        
-        public MouseData(int ID, int x, int y, int button)
+
+        public MouseData(int ID, int x, int y, int button, int UpOrDown)
         {
             _ID = (byte)ID;
             _x = (ushort)x;
             _y = (ushort)y;
             _button = (byte)button;
+            _UpOrDown = (byte)UpOrDown;
         }
 
         public static byte[] toByteArr(MouseData input)
         {
-            byte[] mas = new byte[10];
+            byte[] mas = new byte[11];
             mas[0] = input._ID;
             for (int i = 0; i < 4; i++)
             {
@@ -50,6 +62,7 @@ namespace TCP_Client_WinForms
                 mas[i + 5] = Convert.ToByte(input._y / (ushort)Math.Pow(10, 3 - i) % 10);
             }
             mas[9] = input._button;
+            mas[10] = input._UpOrDown;
             return mas;
         }
 
@@ -64,7 +77,16 @@ namespace TCP_Client_WinForms
                 x += Convert.ToUInt16(arr[i + 1] * (ushort)Math.Pow(10, 3 - i));
                 y += Convert.ToUInt16(arr[i + 5] * (ushort)Math.Pow(10, 3 - i));
             }
-            return new MouseData(ID, x, y, button);
+            byte UpOrDown = arr[10];
+            return new MouseData(ID, x, y, button, UpOrDown);
+        }
+
+        public override string ToString()
+        {
+            var ret = "";
+            if (_x != 0 || _y != 0 || _ID != 0 || _button != 0)
+                ret = _x + " " + _y + " " + _ID + " " + _button;
+            return ret;
         }
     }
 
@@ -72,6 +94,12 @@ namespace TCP_Client_WinForms
     {
         public byte _button;
         public byte _ID;
+
+        public KeyBoardData()
+        {
+            _button = 0;
+            _ID = 0;
+        }
 
         public KeyBoardData(byte ID, byte button)
         {
@@ -92,6 +120,14 @@ namespace TCP_Client_WinForms
             byte ID = arr[0];
             byte button = arr[9];
             return new KeyBoardData(ID, button);
+        }
+
+        public override string ToString()
+        {
+            var ret = "";
+            if (_ID != 0 || _button != 0)
+                ret = _ID + " " + _button;
+            return ret;
         }
     }
 }
