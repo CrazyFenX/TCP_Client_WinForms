@@ -62,12 +62,12 @@ namespace TCP_Client_WinForms
 
         private void Remote_KeyDown(object sender, KeyEventArgs e)
         {
-
+            SendKeyBoard(e, 1);
         }
 
         private void Remote_KeyUp(object sender, KeyEventArgs e)
         {
-
+            SendKeyBoard(e, 2);
         }
 
         #endregion
@@ -104,7 +104,7 @@ namespace TCP_Client_WinForms
                 tcpClient.SendAsyncTCP(btArray);
             }
         }
-        
+
         private void SendMouse(DragEventArgs e, int clickType)
         {
             if (e != null && tcpClient != null)
@@ -115,12 +115,12 @@ namespace TCP_Client_WinForms
             }
         }
 
-        private void SendKeyBoard(KeyEventArgs e)
+        private void SendKeyBoard(KeyEventArgs e, int clickType)
         {
             if (e != null && tcpClient != null)
             {
                 byte buttonId = (byte)e.KeyValue;
-                KeyBoardData keyBoard = new KeyBoardData(1, buttonId);
+                KeyBoardData keyBoard = new KeyBoardData(1, buttonId, Convert.ToByte(clickType));
                 byte[] btArray = KeyBoardData.toByteArr(keyBoard);
                 tcpClient.SendAsyncTCP(btArray);
             }

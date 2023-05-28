@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
+using TCP_Client_WinForms;
 
 namespace TCP_Client_Server
 {
     public class Client
     {
         int port = 5555;
-        string hostname = "192.168.0.14";
+        string hostname = "169.254.150.225";
 
         Socket serverSocket;
 
@@ -148,7 +149,7 @@ namespace TCP_Client_Server
                     // получаем данные из потока
                     int bytes = await serverSocket.ReceiveAsync(data, SocketFlags.None);
                     var recievedImage1 = ByteToImage(data);
-                    
+
                     pictureBox.Image = recievedImage1;
                     pictureBox.Update();
                     pictureBox.Refresh();
@@ -186,7 +187,7 @@ namespace TCP_Client_Server
             if (_textBoxState != null)
                 _textBoxState.Text += "\r\n" + message;
         }
-        
+
         /// <summary>
         /// Запись в файл лога извне
         /// </summary>
