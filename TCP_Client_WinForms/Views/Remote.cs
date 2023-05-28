@@ -31,20 +31,20 @@ namespace TCP_Client_WinForms
 
         private void pictureBox_MouseDown(object sender, MouseEventArgs e)
         {
-            SendMouse(e);
+            SendMouse(e, 1);
         }
 
         private void pictureBox_MouseMove(object sender, MouseEventArgs e)
         {
-            SendMouse(e);
+            SendMouse(e, 0);
         }
 
         private void pictureBox_MouseUp(object sender, MouseEventArgs e)
         {
-            SendMouse(e);
+            SendMouse(e, 2);
         }
 
-        private void SendMouse(MouseEventArgs e)
+        private void SendMouse(MouseEventArgs e, int clickType)
         {
             if (e != null && tcpClient != null)
             {
@@ -63,7 +63,7 @@ namespace TCP_Client_WinForms
                         buttonId = 3;
                         break;
                 }
-                MouseData mouse = new MouseData(0, e.X, e.Y, buttonId);
+                MouseData mouse = new MouseData(0, e.X, e.Y, buttonId, clickType);
                 byte[] btArray = MouseData.toByteArr(mouse);
                 tcpClient.SendAsyncTCP(btArray);
             }
