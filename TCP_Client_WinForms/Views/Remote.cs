@@ -46,12 +46,12 @@ namespace TCP_Client_WinForms
 
         private void pictureBox_DragOver(object sender, DragEventArgs e)
         {
-
+            SendMouse(e, 2);
         }
 
         private void pictureBox_DragDrop(object sender, DragEventArgs e)
         {
-
+            SendMouse(e, 2);
         }
 
         #endregion
@@ -92,6 +92,35 @@ namespace TCP_Client_WinForms
                         break;
                 }
                 MouseData mouse = new MouseData(0, e.X, e.Y, buttonId, clickType);
+                byte[] btArray = MouseData.toByteArr(mouse);
+                tcpClient.SendAsyncTCP(btArray);
+            }
+        }
+        
+        private void SendMouse(KeyEventArgs e, int clickType)
+        {
+            Point pos = Cursor.Position;
+            if (e != null && tcpClient != null)
+            {
+                byte buttonId = 0;
+                switch (e.KeyData)
+                {
+                    case Keys.LButton:
+                        buttonId = 1;
+                        break;
+
+                    case Keys.MButton:
+                        buttonId = 2;
+                        break;
+
+                    case Keys.RButton:
+                        buttonId = 3;
+                        break;
+                    default:
+                        buttonId = 0;
+                        break;
+                }
+                MouseData mouse = new MouseData(0, pos.X, pos.Y, buttonId, clickType);
                 byte[] btArray = MouseData.toByteArr(mouse);
                 tcpClient.SendAsyncTCP(btArray);
             }
