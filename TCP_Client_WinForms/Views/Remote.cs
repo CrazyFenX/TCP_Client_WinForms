@@ -44,6 +44,34 @@ namespace TCP_Client_WinForms
             SendMouse(e, 2);
         }
 
+        private void pictureBox_DragOver(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void pictureBox_DragDrop(object sender, DragEventArgs e)
+        {
+
+        }
+
+        #endregion
+
+        #region KeyBoard Control
+
+        private void Remote_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void Remote_KeyUp(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        #endregion
+
+        #region Service methods
+
         private void SendMouse(MouseEventArgs e, int clickType)
         {
             if (e != null && tcpClient != null)
@@ -79,16 +107,8 @@ namespace TCP_Client_WinForms
                 tcpClient.SendAsyncTCP(btArray);
             }
         }
+
         #endregion
 
-        private void Remote_KeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
-
-        private void Remote_KeyUp(object sender, KeyEventArgs e)
-        {
-
-        }
     }
 }

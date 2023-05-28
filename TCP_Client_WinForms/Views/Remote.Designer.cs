@@ -44,6 +44,8 @@
             this.pictureBox.Size = new System.Drawing.Size(1456, 724);
             this.pictureBox.TabIndex = 9;
             this.pictureBox.TabStop = false;
+            this.pictureBox.DragDrop += new System.Windows.Forms.DragEventHandler(this.pictureBox_DragDrop);
+            this.pictureBox.DragOver += new System.Windows.Forms.DragEventHandler(this.pictureBox_DragOver);
             this.pictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseDown);
             this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseMove);
             this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
