@@ -35,10 +35,10 @@ namespace TCP_Client_Server
         /// <param name="_port"> порт сервера </param>
         /// <param name="_textBoxState"> текстбокс для вывода логов </param>
         /// <param name="_pictureBox"> полотно для отрисовки переданных изображений </param>
-        public Client(string _hostname, int _port, TextBox _textBoxState, PictureBox _pictureBox/*, Thread _tcpThread, Thread _udpThread*/)
+        public Client(string _hostname, int _port, TextBox _textBoxState/*, Thread _tcpThread, Thread _udpThread*/)
         {
             textBoxState = _textBoxState;
-            pictureBox = _pictureBox;
+            //pictureBox = _pictureBox;
             //tcpThread = _tcpThread;
             //udpThread = _udpThread;
 
@@ -68,6 +68,23 @@ namespace TCP_Client_Server
         /// <summary>
         /// Отправить сообщение
         /// </summary>
+        public void SendSyncTCP(byte[] data)
+        {
+            if (serverSocket == null)
+            {
+                WriteInLog("Клиент не доступен!");
+                return;
+            }
+
+            // Отправляем данные
+            serverSocket.Send(data, SocketFlags.None);
+
+            //WriteInLog("Сообщение отправлено");
+        }        
+        
+        /// <summary>
+        /// Отправить сообщение асинхронно
+        /// </summary>
         public async void SendAsyncTCP(byte[] data)
         {
             if (serverSocket == null)
@@ -79,7 +96,26 @@ namespace TCP_Client_Server
             // Отправляем данные
             await serverSocket.SendAsync(data, SocketFlags.None);
 
-            WriteInLog("Сообщение отправлено");
+            //WriteInLog("Сообщение отправлено");
+        }        
+
+        /// <summary>
+        /// Отправить сообщение
+        /// </summary>
+        public void SendArchive(string zipFilePath)
+        {
+            if (serverSocket == null)
+            {
+                WriteInLog("Клиент не доступен!");
+                return;
+            }
+
+            using (NetworkStream stream = new NetworkStream(serverSocket))
+            using (FileStream fileStream = File.OpenRead(zipFilePath))
+            {
+                fileStream.CopyTo(stream);
+            }
+            WriteInLog($"Файл {zipFilePath} отправлен");
         }
 
         /// <summary>
@@ -115,7 +151,7 @@ namespace TCP_Client_Server
 
         public void ServerDisconnect()
         {
-            serverSocket?.DisconnectAsync(new SocketAsyncEventArgs(true)); // отключаемся
+            //serverSocket?.DisconnectAsync(new SocketAsyncEventArgs(true)); // отключаемся
         }
 
         ~Client()
